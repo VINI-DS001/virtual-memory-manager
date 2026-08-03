@@ -1,0 +1,21 @@
+Start testing: Aug 03 18:50 Hora Padrão da Bahia
+----------------------------------------------------------
+1/1 Testing: BasicSanityTest
+1/1 Test: BasicSanityTest
+Command: "C:/Users/vinid/Downloads/virtual-memory-manager/build/tests/vmm_test_basic.exe"
+Directory: C:/Users/vinid/Downloads/virtual-memory-manager/build/tests
+"BasicSanityTest" start time: Aug 03 18:50 Hora Padrão da Bahia
+Output:
+----------------------------------------------------------
+[32m[18:50:59] [INFO ] (test_basic.c:8): Executing Basic Architecture Sanity Test...[0m
+[32m[18:50:59] [INFO ] (config.c:39): VMM Config initialized: Page Size = 4096 B (12 bits offset), Frames = 16, Swap Pages = 256[0m
+[32m[18:50:59] [INFO ] (test_basic.c:19): Sanity Test Passed Successfully![0m
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"BasicSanityTest" end time: Aug 03 18:50 Hora Padrão da Bahia
+"BasicSanityTest" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 03 18:50 Hora Padrão da Bahia

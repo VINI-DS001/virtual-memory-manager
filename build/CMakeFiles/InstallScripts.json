@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/vinid/Downloads/virtual-memory-manager/build/cmake_install.cmake",
+		"C:/Users/vinid/Downloads/virtual-memory-manager/build/src/cmake_install.cmake",
+		"C:/Users/vinid/Downloads/virtual-memory-manager/build/tests/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
