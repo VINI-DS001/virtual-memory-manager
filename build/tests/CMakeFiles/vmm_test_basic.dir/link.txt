@@ -1,3 +1,0 @@
-"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\vmm_test_basic.dir/objects.a
-C:\mingw64\bin\ar.exe qc CMakeFiles\vmm_test_basic.dir/objects.a @CMakeFiles\vmm_test_basic.dir\objects1.rsp
-C:\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\vmm_test_basic.dir/objects.a -Wl,--no-whole-archive -o vmm_test_basic.exe -Wl,--out-implib,libvmm_test_basic.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\vmm_test_basic.dir\linkLibs.rsp

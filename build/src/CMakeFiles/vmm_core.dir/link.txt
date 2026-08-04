@@ -1,2 +1,0 @@
-C:\mingw64\bin\ar.exe qc libvmm_core.a CMakeFiles/vmm_core.dir/utils/log.c.obj CMakeFiles/vmm_core.dir/config.c.obj
-C:\mingw64\bin\ranlib.exe libvmm_core.a
