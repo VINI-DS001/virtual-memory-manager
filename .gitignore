@@ -1,0 +1,16 @@
+# Build directory
+build/
+bin/
+lib/
+
+# VS Code & IDEs
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/c_cpp_properties.json
+.idea/
+
+# Compile commands & CMake generated files
+compile_commands.json
+CMakeCache.txt
+CMakeFiles/
