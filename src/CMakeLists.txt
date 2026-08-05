@@ -3,6 +3,7 @@ set(VMM_SOURCES
     utils/log.c
     config.c
     cpu.c
+    ram.c
 )
 
 # Public Header files
@@ -10,6 +11,7 @@ set(VMM_HEADERS
     ${CMAKE_SOURCE_DIR}/include/vmm/types.h
     ${CMAKE_SOURCE_DIR}/include/vmm/config.h
     ${CMAKE_SOURCE_DIR}/include/vmm/cpu.h
+    ${CMAKE_SOURCE_DIR}/include/vmm/ram.h
     ${CMAKE_SOURCE_DIR}/include/vmm/utils/log.h
 )
 
