@@ -12,3 +12,8 @@ add_test(NAME CpuWorkloadTest COMMAND vmm_test_cpu)
 add_executable(vmm_test_ram test_ram.c)
 target_link_libraries(vmm_test_ram PRIVATE vmm_core)
 add_test(NAME PhysicalRamTest COMMAND vmm_test_ram)
+
+# MMU and Page Table module test
+add_executable(vmm_test_mmu test_mmu.c)
+target_link_libraries(vmm_test_mmu PRIVATE vmm_core)
+add_test(NAME MmuTranslationTest COMMAND vmm_test_mmu)
