@@ -5,6 +5,7 @@ set(VMM_SOURCES
     cpu.c
     ram.c
     page_table.c
+    tlb.c
     mmu.c
 )
 

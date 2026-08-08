@@ -9,6 +9,7 @@
 #include "vmm/types.h"
 #include "vmm/ram.h"
 #include "vmm/page_table.h"
+#include "vmm/tlb.h"
 
 /** @brief Translation Result Status. */
 typedef enum
@@ -24,6 +25,7 @@ typedef struct
 {
     ram_t *ram;                /**< Pointer to physical RAM. */
     page_table_t *page_table;  /**< Pointer to current active Page Table. */
+    tlb_t *tlb;                /**< Pointer to TLB Cache. */
     uint32_t page_offset_bits; /**< Number of bits used for offset (e.g. 12 for 4KB). */
 
     // Performance Statistics
@@ -38,7 +40,7 @@ typedef struct
  * @param pt Pointer to initialized Page Table.
  * @param page_offset_bits Offset width in bits (from vmm_config_t).
  */
-void mmu_init(mmu_t *mmu, ram_t *ram, page_table_t *pt, uint32_t page_offset_bits);
+void mmu_init(mmu_t *mmu, ram_t *ram, page_table_t *pt, tlb_t *tlb, uint32_t page_offset_bits);
 
 /**
  * @brief Translates Virtual Address to Physical Address using Page Table.

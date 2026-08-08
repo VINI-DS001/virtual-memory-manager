@@ -17,3 +17,8 @@ add_test(NAME PhysicalRamTest COMMAND vmm_test_ram)
 add_executable(vmm_test_mmu test_mmu.c)
 target_link_libraries(vmm_test_mmu PRIVATE vmm_core)
 add_test(NAME MmuTranslationTest COMMAND vmm_test_mmu)
+
+# TLB module test
+add_executable(vmm_test_tlb test_tlb.c)
+target_link_libraries(vmm_test_tlb PRIVATE vmm_core)
+add_test(NAME TlbCacheTest COMMAND vmm_test_tlb)

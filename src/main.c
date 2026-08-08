@@ -6,6 +6,7 @@
 #include "vmm/cpu.h"
 #include "vmm/ram.h"
 #include "vmm/page_table.h"
+#include "vmm/tlb.h"
 #include "vmm/mmu.h"
 #include "vmm/utils/log.h"
 
@@ -13,7 +14,7 @@ int main(int argc, char *argv[])
 {
     srand((unsigned int)time(NULL));
 
-    LOG_INFO("Starting Virtual Memory Manager Simulator (Phase 4)...");
+    LOG_INFO("Starting Virtual Memory Manager Simulator (Phase 5 - TLB Cache)...");
 
     vmm_config_t config;
     vmm_config_init_default(&config);
@@ -29,8 +30,19 @@ int main(int argc, char *argv[])
     page_table_map(&pt, 0, 3, (uint8_t)(PAGE_FLAG_READABLE | PAGE_FLAG_WRITABLE));
     page_table_map(&pt, 1, 7, (uint8_t)(PAGE_FLAG_READABLE));
 
+    tlb_t tlb;
+
+    if (!tlb_init(&tlb, 4))
+    {
+        LOG_ERROR("Failed to initialize TLB.");
+        page_table_destroy(&pt);
+        ram_destroy(&ram);
+
+        return 1;
+    }
+
     mmu_t mmu;
-    mmu_init(&mmu, &ram, &pt, config.page_offset_bits);
+    mmu_init(&mmu, &ram, &pt, &tlb, config.page_offset_bits);
 
     cpu_t cpu;
     cpu_init(&cpu, 101, config.ram_size);
@@ -62,8 +74,15 @@ int main(int argc, char *argv[])
         }
     }
 
+    LOG_INFO(
+        "TLB Statistics | Hits: %llu | Misses: %llu | Hit Rate: %.2f%%",
+        (unsigned long long)tlb.hits,
+        (unsigned long long)tlb.misses,
+        (double)tlb_get_hit_rate(&tlb));
+
+    tlb_destroy(&tlb);
     page_table_destroy(&pt);
     ram_destroy(&ram);
-    LOG_INFO("Phase 4 MMU Address Translation completed.");
+    LOG_INFO("Phase 5 MMU Address Translation & TLB Cache completed.");
     return 0;
 }
