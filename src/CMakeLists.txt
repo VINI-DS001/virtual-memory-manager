@@ -7,6 +7,7 @@ set(VMM_SOURCES
     page_table.c
     tlb.c
     mmu.c
+    page_fault.c
 )
 
 # Public Header files
@@ -16,7 +17,9 @@ set(VMM_HEADERS
     ${CMAKE_SOURCE_DIR}/include/vmm/cpu.h
     ${CMAKE_SOURCE_DIR}/include/vmm/ram.h
     ${CMAKE_SOURCE_DIR}/include/vmm/page_table.h
+    ${CMAKE_SOURCE_DIR}/include/vmm/tlb.h
     ${CMAKE_SOURCE_DIR}/include/vmm/mmu.h
+    ${CMAKE_SOURCE_DIR}/include/vmm/page_fault.h
     ${CMAKE_SOURCE_DIR}/include/vmm/utils/log.h
 )
 
