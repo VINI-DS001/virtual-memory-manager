@@ -23,6 +23,9 @@ int main(void)
     tlb_t tlb;
     tlb_init(&tlb, 4);
 
+    replacement_manager_t repl_mgr;
+    replacement_init(&repl_mgr, config.total_frames, REPLACEMENT_FIFO);
+
     mmu_t mmu;
     mmu_init(&mmu, &ram, &pt, &tlb, config.page_offset_bits);
 
@@ -34,7 +37,7 @@ int main(void)
     assert(status == MMU_PAGE_FAULT);
 
     // Step 2: Kernel resolves Page Fault
-    bool resolved = handle_page_fault(101, 2, &pt, &ram);
+    bool resolved = handle_page_fault(101, 2, &pt, &ram, &tlb, &repl_mgr);
     assert(resolved == true);
 
     // Step 3: Retried access must succeed (Mapped to Frame 0)

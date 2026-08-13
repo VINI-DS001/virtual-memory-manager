@@ -8,6 +8,7 @@ set(VMM_SOURCES
     tlb.c
     mmu.c
     page_fault.c
+    replacement.c
 )
 
 # Public Header files
@@ -20,6 +21,7 @@ set(VMM_HEADERS
     ${CMAKE_SOURCE_DIR}/include/vmm/tlb.h
     ${CMAKE_SOURCE_DIR}/include/vmm/mmu.h
     ${CMAKE_SOURCE_DIR}/include/vmm/page_fault.h
+    ${CMAKE_SOURCE_DIR}/include/vmm/replacement.h
     ${CMAKE_SOURCE_DIR}/include/vmm/utils/log.h
 )
 

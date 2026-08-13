@@ -8,6 +8,7 @@
 #include "vmm/page_table.h"
 #include "vmm/tlb.h"
 #include "vmm/mmu.h"
+#include "vmm/replacement.h"
 #include "vmm/page_fault.h"
 #include "vmm/utils/log.h"
 
@@ -15,79 +16,63 @@ int main(int argc, char *argv[])
 {
     srand((unsigned int)time(NULL));
 
-    LOG_INFO("Starting Virtual Memory Manager Simulator (Phase 6 - Page Fault Handler)...");
+    LOG_INFO("Starting Virtual Memory Manager Simulator (Phase 7 - Page Replacement Algorithms)...");
 
     vmm_config_t config;
     vmm_config_init_default(&config);
+    config.total_frames = 4; // Small RAM (4 Frames) to force page replacement easily
 
     ram_t ram;
     ram_init(&ram, &config);
 
     page_table_t pt;
-    uint32_t max_pages = config.ram_size / config.page_size;
-    page_table_init(&pt, max_pages);
-
-    // Page table starts EMPTY to test Demand Paging!
+    page_table_init(&pt, 16);
 
     tlb_t tlb;
-    if (!tlb_init(&tlb, config.tlb_capacity))
-    {
-        LOG_ERROR("Failed to initialize TLB.");
-        page_table_destroy(&pt);
-        ram_destroy(&ram);
-        return 1;
-    }
+    tlb_init(&tlb, config.tlb_capacity);
 
     mmu_t mmu;
     mmu_init(&mmu, &ram, &pt, &tlb, config.page_offset_bits);
 
-    cpu_t cpu;
-    cpu_init(&cpu, 101, config.ram_size);
-    cpu_set_pattern(&cpu, PATTERN_SEQUENTIAL);
+    replacement_manager_t repl_mgr;
+    replacement_init(&repl_mgr, config.total_frames, REPLACEMENT_FIFO);
 
-    LOG_INFO("Simulating Demand Paging with CPU accesses...");
-    for (int i = 0; i < 6; i++)
+    // Demonstration 1: FIFO Eviction
+    LOG_INFO("=== DEMO 1: Testing FIFO Replacement Policy ===");
+    for (vpn_t vpn = 0; vpn < 6; vpn++)
     {
-        mem_access_req_t req = cpu_fetch_next_access(&cpu);
+        vaddr_t vaddr = (vaddr_t)vpn * config.page_size;
         paddr_t paddr = 0;
-
-        page_flags_t req_flag = (req.op_type == MEM_OP_WRITE) ? PAGE_FLAG_WRITABLE : PAGE_FLAG_READABLE;
-        mmu_status_t status = mmu_translate(&mmu, req.virtual_address, req_flag, &paddr);
+        mmu_status_t status = mmu_translate(&mmu, vaddr, PAGE_FLAG_READABLE, &paddr);
 
         if (status == MMU_PAGE_FAULT)
         {
-            vpn_t fault_vpn = mmu_extract_vpn(req.virtual_address, config.page_offset_bits);
-            LOG_WARN("MMU Page Fault on Virtual Address 0x%04llX (VPN %u)",
-                     (unsigned long long)req.virtual_address, fault_vpn);
-
-            // Kernel handles Page Fault dynamically by allocating RAM frame
-            if (handle_page_fault(req.process_id, fault_vpn, &pt, &ram))
-            {
-                // Retry MMU translation after page fault resolution
-                status = mmu_translate(&mmu, req.virtual_address, req_flag, &paddr);
-            }
-        }
-
-        if (status == MMU_SUCCESS)
-        {
-            LOG_INFO("Access OK | Virtual: 0x%04llX -> Physical: 0x%04llX",
-                     (unsigned long long)req.virtual_address, (unsigned long long)paddr);
-        }
-        else
-        {
-            LOG_ERROR("Fatal memory access failure for address 0x%04llX",
-                      (unsigned long long)req.virtual_address);
+            handle_page_fault(101, vpn, &pt, &ram, &tlb, &repl_mgr);
+            mmu_translate(&mmu, vaddr, PAGE_FLAG_READABLE, &paddr);
         }
     }
 
-    LOG_INFO("TLB Statistics | Hits: %llu | Misses: %llu | Hit Rate: %.2f%%",
-             (unsigned long long)tlb.hits,
-             (unsigned long long)tlb.misses,
-             (double)tlb_get_hit_rate(&tlb));
+    // Demonstration 2: Dynamic Switch to LRU
+    LOG_INFO("=== DEMO 2: Dynamic Switch to LRU Policy ===");
+    replacement_set_algorithm(&repl_mgr, REPLACEMENT_LRU);
+    for (vpn_t vpn = 6; vpn < 9; vpn++)
+    {
+        vaddr_t vaddr = (vaddr_t)vpn * config.page_size;
+        paddr_t paddr = 0;
+        mmu_status_t status = mmu_translate(&mmu, vaddr, PAGE_FLAG_READABLE, &paddr);
 
+        if (status == MMU_PAGE_FAULT)
+        {
+            handle_page_fault(101, vpn, &pt, &ram, &tlb, &repl_mgr);
+            mmu_translate(&mmu, vaddr, PAGE_FLAG_READABLE, &paddr);
+        }
+    }
+
+    replacement_destroy(&repl_mgr);
     tlb_destroy(&tlb);
     page_table_destroy(&pt);
     ram_destroy(&ram);
-    LOG_INFO("Phase 6 Page Fault Handler completed successfully.");
+
+    LOG_INFO("Phase 7 Page Replacement Algorithms completed successfully.");
     return 0;
 }

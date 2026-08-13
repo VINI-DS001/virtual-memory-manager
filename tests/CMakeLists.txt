@@ -27,3 +27,8 @@ add_test(NAME TlbCacheTest COMMAND vmm_test_tlb)
 add_executable(vmm_test_page_fault test_page_fault.c)
 target_link_libraries(vmm_test_page_fault PRIVATE vmm_core)
 add_test(NAME PageFaultTest COMMAND vmm_test_page_fault)
+
+# Page replacement module test
+add_executable(vmm_test_replacement test_replacement.c)
+target_link_libraries(vmm_test_replacement PRIVATE vmm_core)
+add_test(NAME ReplacementTest COMMAND vmm_test_replacement)
