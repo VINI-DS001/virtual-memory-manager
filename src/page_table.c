@@ -44,21 +44,37 @@ bool page_table_map(page_table_t *pt, vpn_t vpn, pfn_t pfn, uint8_t flags)
     return true;
 }
 
-void page_table_unmap(page_table_t *pt, vpn_t vpn)
+bool page_table_unmap(page_table_t *pt, vpn_t vpn)
 {
     if (!pt || vpn >= pt->total_pages)
-        return;
+    {
+        LOG_ERROR("Page Table Unmap failed: VPN %u out of bounds.", vpn);
+        return false;
+    }
 
     pt->entries[vpn].pfn = 0;
-    pt->entries[vpn].flags = PAGE_FLAG_NONE;
+    pt->entries[vpn].swap_page_id = 0;
+    pt->entries[vpn].flags = 0;
+
     LOG_DEBUG("Page Table: Unmapped VPN %u", vpn);
+    return true;
 }
 
 bool page_table_lookup(const page_table_t *pt, vpn_t vpn, page_table_entry_t *out_entry)
 {
     if (!pt || !out_entry || vpn >= pt->total_pages)
         return false;
-
     *out_entry = pt->entries[vpn];
+    return true;
+}
+
+bool page_table_mark_swapped(page_table_t *pt, vpn_t vpn, uint32_t swap_page_id)
+{
+    if (!pt || vpn >= pt->total_pages)
+        return false;
+    pt->entries[vpn].flags &= (uint8_t)~PAGE_FLAG_PRESENT;
+    pt->entries[vpn].flags |= PAGE_FLAG_SWAPPED;
+    pt->entries[vpn].swap_page_id = swap_page_id;
+    LOG_DEBUG("Page Table: Marked VPN %u as SWAPPED (Disk Slot %u)", vpn, swap_page_id);
     return true;
 }

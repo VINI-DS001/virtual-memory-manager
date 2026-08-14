@@ -32,3 +32,8 @@ add_test(NAME PageFaultTest COMMAND vmm_test_page_fault)
 add_executable(vmm_test_replacement test_replacement.c)
 target_link_libraries(vmm_test_replacement PRIVATE vmm_core)
 add_test(NAME ReplacementTest COMMAND vmm_test_replacement)
+
+# Swap disk and virtual memory system test
+add_executable(vmm_test_swap test_swap.c)
+target_link_libraries(vmm_test_swap PRIVATE vmm_core)
+add_test(NAME SwapTest COMMAND vmm_test_swap)

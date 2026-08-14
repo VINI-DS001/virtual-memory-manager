@@ -51,7 +51,7 @@ int main(void)
         "TLB Statistics | Hits: %llu | Misses: %llu | Hit Rate: %.2f%%",
         (unsigned long long)tlb.hits,
         (unsigned long long)tlb.misses,
-        tlb_get_hit_rate(&tlb));
+        (double)tlb_get_hit_rate(&tlb));
 
     tlb_destroy(&tlb);
     page_table_destroy(&pt);
