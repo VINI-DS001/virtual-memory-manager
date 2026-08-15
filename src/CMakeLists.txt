@@ -10,6 +10,9 @@ set(VMM_SOURCES
     mmu.c
     page_fault.c
     replacement.c
+    stats.c
+    workload.c
+    benchmark.c
 )
 
 # Public Header files
@@ -24,6 +27,9 @@ set(VMM_HEADERS
     ${CMAKE_SOURCE_DIR}/include/vmm/mmu.h
     ${CMAKE_SOURCE_DIR}/include/vmm/page_fault.h
     ${CMAKE_SOURCE_DIR}/include/vmm/replacement.h
+    ${CMAKE_SOURCE_DIR}/include/vmm/stats.h
+    ${CMAKE_SOURCE_DIR}/include/vmm/workload.h
+    ${CMAKE_SOURCE_DIR}/include/vmm/benchmark.h
     ${CMAKE_SOURCE_DIR}/include/vmm/utils/log.h
 )
 

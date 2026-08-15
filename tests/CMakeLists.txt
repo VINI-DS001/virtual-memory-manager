@@ -37,3 +37,18 @@ add_test(NAME ReplacementTest COMMAND vmm_test_replacement)
 add_executable(vmm_test_swap test_swap.c)
 target_link_libraries(vmm_test_swap PRIVATE vmm_core)
 add_test(NAME SwapTest COMMAND vmm_test_swap)
+
+# Statistics collector module test
+add_executable(vmm_test_stats test_stats.c)
+target_link_libraries(vmm_test_stats PRIVATE vmm_core)
+add_test(NAME StatsTest COMMAND vmm_test_stats)
+
+# Workload generator module test
+add_executable(vmm_test_workload test_workload.c)
+target_link_libraries(vmm_test_workload PRIVATE vmm_core)
+add_test(NAME WorkloadTest COMMAND vmm_test_workload)
+
+# Benchmark orchestrator module test
+add_executable(vmm_test_benchmark test_benchmark.c)
+target_link_libraries(vmm_test_benchmark PRIVATE vmm_core)
+add_test(NAME BenchmarkTest COMMAND vmm_test_benchmark)

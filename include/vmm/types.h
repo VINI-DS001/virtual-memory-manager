@@ -9,6 +9,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include <sys/types.h>
 
 /** @brief Virtual Address representation (64-bit unsigned integer). */
 typedef uint64_t vaddr_t;
