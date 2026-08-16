@@ -41,6 +41,10 @@ target_include_directories(vmm_core PUBLIC
     $<INSTALL_INTERFACE:include>
 )
 
-# Main Executable
+# Main Simulator Executable
 add_executable(vmm_sim main.c)
 target_link_libraries(vmm_sim PRIVATE vmm_core)
+
+# Benchmark CLI Executable
+add_executable(vmm_benchmark_cli main_benchmark.c)
+target_link_libraries(vmm_benchmark_cli PRIVATE vmm_core)

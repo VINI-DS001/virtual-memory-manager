@@ -14,3 +14,7 @@ lib/
 compile_commands.json
 CMakeCache.txt
 CMakeFiles/
+
+# Generated Benchmark Results Data
+*.csv
+results/
