@@ -36,7 +36,7 @@ typedef struct
  * @param num_pages Number of virtual pages supported.
  * @return true on success, false on allocation failure.
  */
-bool page_table_init(page_table_t *pt, uint32_t max_entries);
+bool page_table_init(page_table_t *pt, uint32_t num_pages);
 
 /**
  * @brief Frees memory allocated for the page table.

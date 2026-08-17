@@ -7,7 +7,6 @@ lib/
 .vscode/*
 !.vscode/tasks.json
 !.vscode/launch.json
-!.vscode/c_cpp_properties.json
 .idea/
 
 # Compile commands & CMake generated files
@@ -18,3 +17,6 @@ CMakeFiles/
 # Generated Benchmark Results Data
 *.csv
 results/
+
+# Doxygen generated documentation
+docs/doxygen/

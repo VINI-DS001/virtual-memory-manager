@@ -1,0 +1,31 @@
+# Project metadata
+PROJECT_NAME           = "Virtual Memory Manager Simulator"
+PROJECT_NUMBER         = "1.0.0"
+PROJECT_BRIEF          = "A modular, high-performance C-based VMM simulator with configurable page replacement policies and statistical profiling."
+OUTPUT_DIRECTORY       = "docs/doxygen"
+
+# Build configuration
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+CASE_SENSE_NAMES       = YES
+
+# Input files
+INPUT                  = include src
+FILE_PATTERNS          = *.h *.c
+RECURSIVE              = YES
+EXCLUDE_PATTERNS       = */build/* */.git/*
+
+# HTML output options
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_FILE_EXTENSION    = .html
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+FULL_SIDEBAR           = YES
+
+# Disable unused outputs
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO

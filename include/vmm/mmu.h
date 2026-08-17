@@ -38,6 +38,7 @@ typedef struct
  * @param mmu Pointer to allocated mmu_t structure.
  * @param ram Pointer to initialized RAM instance.
  * @param pt Pointer to initialized Page Table.
+ * @param tlb Pointer to initialized TLB cache instance.
  * @param page_offset_bits Offset width in bits (from vmm_config_t).
  */
 void mmu_init(mmu_t *mmu, ram_t *ram, page_table_t *pt, tlb_t *tlb, uint32_t page_offset_bits);
